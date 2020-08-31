@@ -4,28 +4,29 @@
 #include "Vector.h"
 #include "Intersection.h"
 #include "Ray.h"
+#include "Sphere.h"
 
 class Computations {
+
 	Shape shape;
 	double t;
 	Point point;
 	Vector eye;
 	Vector normal;
 	bool inside;
+
 public:
 
 	Computations() {}
 
 	Computations (Intersection i, Ray ray) { //PREPARE COMPUTATIONS
+
 		this->shape = i.getObject();
-
-		shape.getMaterial().Print();
-
 		this->t = i.getT();
 
-		this->point = ray.position(i.getT());
+		this->point = ray.position(t);
 		this->eye = -ray.getDirection();
-		this->normal = shape.normalAt(ray.position(i.getT()));
+		this->normal = i.getObject().normalAt(ray.position(i.getT()));
 		
 		if (normal.dot(eye) < 0) {
 			inside = true;

@@ -3,7 +3,6 @@
 #include "Ray.h"
 #include "Point.h"
 #include "Vector.h"
-#include "Shape.h"
 #include "Matrix.h"
 //#include "Intersection.h"
 #include "Material.h"
@@ -14,6 +13,9 @@ using namespace std;
 class Shape {
 
 protected:
+
+	string type;
+
 	int currID = 0;
 	int ID;
 	Point position;
@@ -45,6 +47,7 @@ public:
 
 	void Print() {
 	
+		cout << "Type: " << type << endl;
 		cout << "RayObject: " << ID << endl;
 	
 	}
@@ -119,7 +122,7 @@ public:
 	}
 
 	Color lighting(Point position, Light light, Vector eye, Vector normal) {
-		//Color output = Color();
+		
 		Color effectiveColor = material.getColor() * light.getIntensity();
 		material.Print();
 		Vector lightVec = Vector(light.getPosition() - position).normalize();
@@ -150,7 +153,7 @@ public:
 		//ambientColor.Print();
 		//diffuseColor.Print();
 		//specularColor.Print();
-		//cout << "-------------------" << endl;
+		////cout << "-------------------" << endl;
 		return ambientColor + diffuseColor + specularColor;
 	}
 

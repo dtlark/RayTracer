@@ -75,7 +75,7 @@ int main() {
 
 			double worldX = -half + pixelSize * x;
 
-			Point position = Point(worldX, worldY, wall.getZ()); // wall - ???
+			Point position = Point(worldX, worldY, wall.getZ());
 
 			Point origin = Point(0, 0, -5);
 
@@ -84,7 +84,7 @@ int main() {
 
 			Ray ray = Ray(origin, direction);
 
-			vector<Intersection> inter = scene.intersectS(ray);
+			vector<Intersection> inter = scene.intersectWorld(ray);
 
 			Intersection hit = scene.Hit(inter);
 

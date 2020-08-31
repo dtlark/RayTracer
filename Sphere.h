@@ -12,21 +12,16 @@
 
 using namespace std;
 
-class Sphere : public Shape{
+class Sphere : public Shape {
 
-	int currID = 0;
-	int ID;
-	Point position;
 	double radius;
-	Material material;
-	Matrix transformation = Matrix({{1, 0, 0, 0},
-									{0, 1, 0, 0},
-									{0, 0, 1, 0},
-									{0, 0, 0, 1}});
+
 public:
 
 	Sphere(double radius = 1, Material material = Material()) {
 		
+		type = "Sphere";
+
 		ID = currID++;
 		position = Point(0, 0, 0);
 		this->radius = radius;
@@ -112,7 +107,7 @@ Material getMaterial() {
 
 Vector normalAt(Point world) {
 
-	Point objectPoint = transformation * world;
+	Point objectPoint = transformation.inverse() * world;
 	Vector objectNormal = Vector(objectPoint - Point(0, 0, 0));
 	Vector worldNormal = transformation.inverse().transpose() * objectNormal;
 	worldNormal.setW(0);
@@ -123,7 +118,7 @@ Vector normalAt(Point world) {
 }
 
 Color lighting(Point position, Light light, Vector eye, Vector normal) {
-	//Color output = Color();
+
 	Color effectiveColor = material.getColor() * light.getIntensity();
 	Vector lightVec = Vector(light.getPosition() - position).normalize();
 	Color ambientColor = effectiveColor * material.getAmbient();
@@ -151,6 +146,15 @@ Color lighting(Point position, Light light, Vector eye, Vector normal) {
 	}
 	return  ambientColor + diffuseColor + specularColor;
 }
+
+void Print() {
+
+	cout << "ID: " << ID << endl;
+	cout << "Type: " << type << endl;
+	cout << "Radius: " << radius << endl;
+
+}
+
 
 };
 

@@ -21,7 +21,7 @@ public:
 		lights.push_back(light);
 
 		Sphere s1 = Sphere();
-		Material mat = Material(Color(0.8, 1, 0.6));
+		Material mat = Material(Color(0.8, 1.0, 0.6));
 		mat.setDiffuse(0.7);
 		mat.setSpecular(0.2);
 		s1.setMaterial(mat);
@@ -41,6 +41,10 @@ public:
 		this->shapes = shapes;
 	}
 
+	void replaceLight(Light light) {
+		lights[0] = light;
+	}
+
 	void addLight(Light light) {
 		lights.push_back(light);
 	}
@@ -56,7 +60,7 @@ public:
 	}
 
 
-	std::vector<Intersection> intersectS(Ray newray) {
+	std::vector<Intersection> intersectWorld(Ray newray) {
 
 		std::vector<Intersection> inters;
 
@@ -111,9 +115,10 @@ public:
 		Color finalColor = Color(0, 0, 0);
 
 		for (int i = 0; i < lights.size(); i++) {
+		
 			finalColor = finalColor + comp.getShape().lighting(comp.getPoint(), lights[i], comp.getEye(), comp.getNormal());	
 		}
-	
+
 		return finalColor;
 		//return comp.getShape().lighting(comp.getPoint(), lights[lights.size()-1], comp.getEye(), comp.getNormal());
 	}
