@@ -1,6 +1,5 @@
 #pragma once
 #include "Light.h"
-#include "Sphere.h"
 #include "Shape.h"
 #include "Intersection.h"
 #include "Computations.h"
@@ -11,7 +10,7 @@
 
 class Scene {
 	vector<Light> lights;
-	vector<Sphere> shapes;
+	vector<Shape> shapes;
 
 public:
 	Scene() {}
@@ -20,13 +19,13 @@ public:
 		Light light = Light(Color(1, 1, 1), Point(-10, 10, -10));
 		lights.push_back(light);
 
-		Sphere s1 = Sphere();
+		Shape s1 = Sphere();
 		Material mat = Material(Color(0.8, 1.0, 0.6));
 		mat.setDiffuse(0.7);
 		mat.setSpecular(0.2);
 		s1.setMaterial(mat);
 		
-		Sphere s2 = Sphere();
+		Shape s2 = Sphere();
 		Matrix scale = scale.scalingMatrix(0.5, 0.5, 0.5);
 		s2.setTransform(scale);
 
@@ -36,7 +35,7 @@ public:
 
 
 
-	Scene(vector<Light> lights, vector<Sphere> shapes) {
+	Scene(vector<Light> lights, vector<Shape> shapes) {
 		this->lights = lights;
 		this->shapes = shapes;
 	}
@@ -48,14 +47,15 @@ public:
 	void addLight(Light light) {
 		lights.push_back(light);
 	}
-	void addShape(Sphere shape) {
+	void addShape(Shape shape) {
 		shapes.push_back(shape);
 	}
 
 	//vector<Shape> getShapes() {
 	//	return shapes;
 	//}
-	void setShapes(vector<Sphere> shapes) {
+
+	void setShapes(vector<Shape> shapes) {
 		this->shapes = shapes;
 	}
 
@@ -64,7 +64,7 @@ public:
 
 		std::vector<Intersection> inters;
 
-		for (Sphere r : shapes) {
+		for (Shape r : shapes) {
 
 			std::vector<double> temp = r.intersect(newray);
 
@@ -75,7 +75,7 @@ public:
 		return inters;
 	}
 
-	vector<Sphere> getSpheres() {
+	vector<Shape> getShapes() {
 		return shapes;
 	}
 
@@ -84,7 +84,6 @@ public:
 		Intersection nullInter;
 
 		if (intersections.size() == 0) {
-			//cout << "NULL " << endl;
 			return nullInter;
 		}
 
@@ -118,9 +117,7 @@ public:
 		
 			finalColor = finalColor + comp.getShape().lighting(comp.getPoint(), lights[i], comp.getEye(), comp.getNormal());	
 		}
-
 		return finalColor;
-		//return comp.getShape().lighting(comp.getPoint(), lights[lights.size()-1], comp.getEye(), comp.getNormal());
 	}
 
 

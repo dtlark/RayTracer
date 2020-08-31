@@ -27,7 +27,7 @@
 #include "Canvas.h"
 #include "Matrix.h"
 #include "Ray.h"
-#include "Sphere.h"
+#include "Shape.h"
 #include "Intersection.h"
 #include "Light.h"
 #include "Material.h"
@@ -56,7 +56,7 @@ int main() {
 	Light light = Light(Color(1, 1, 1), Point(-10, -10, -10));
 	scene.addLight(light);
 
-	Sphere circleSphere = Sphere();
+	Shape circleSphere = Sphere();
 	Material mat = circleSphere.getMaterial();
 	mat.setColor(Color(1, 0.2, 0.6));
 	circleSphere.setMaterial(mat);
@@ -95,5 +95,5 @@ int main() {
 			}
 		}
 	}
-	canvas.Save("SampleImage");
+	canvas.Save("SampleImage-2");
 }

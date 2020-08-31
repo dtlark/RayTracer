@@ -44,14 +44,12 @@ public:
 		return position;
 	}
 
-
-	void Print() {
-	
-		cout << "Type: " << type << endl;
-		cout << "RayObject: " << ID << endl;
-	
+	bool operator==(Shape other) {
+		if (currID == other.getID() && position == other.getPosition()) {
+			return true;
+		}
+		return false;
 	}
-
 
 	std::vector<double> intersect(Ray newray) {
 
@@ -111,20 +109,17 @@ public:
 
 	Vector normalAt(Point world) {
 
-		Point objectPoint = transformation * world;
+		Point objectPoint = transformation.inverse() * world;
 		Vector objectNormal = Vector(objectPoint - Point(0, 0, 0));
 		Vector worldNormal = transformation.inverse().transpose() * objectNormal;
 		worldNormal.setW(0);
 
-		//cout << "IN  NORMALAT" << endl;
 		return	worldNormal.normalize();
-		//Vector
 	}
 
 	Color lighting(Point position, Light light, Vector eye, Vector normal) {
 		
 		Color effectiveColor = material.getColor() * light.getIntensity();
-		material.Print();
 		Vector lightVec = Vector(light.getPosition() - position).normalize();
 		Color ambientColor = effectiveColor * material.getAmbient();
 		Color diffuseColor;
@@ -158,30 +153,7 @@ public:
 	}
 
 
-	/*
-
-	public:
-
-		Sphere(double radius = 1) {
-
-			ID = currID++;
-			position = Point(0, 0, 0);
-			this->radius = radius;
-			material = Material();
-		}
-
-
-		double getRadius() {
-			return radius;
-		}
-
-		bool operator==(Sphere other) {
-			if (currID == other.getID() && position == other.getPosition()) {
-				return true;
-			}
-			return false;
-		}
-	*/
+	virtual void Print() {};
 
 };
 

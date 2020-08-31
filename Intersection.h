@@ -1,12 +1,12 @@
 #pragma once
 #include <iostream>
-#include "Sphere.h"
+#include "Shape.h"
 #include "Ray.h"
 using namespace std;
 
 class Intersection {
 
-	Sphere object; //Object
+	Shape object; //Object
 	double t;
 
 public: 
@@ -15,7 +15,7 @@ public:
 		this->t = -1;
 	}
 
-	Intersection(Sphere object, double t) {
+	Intersection(Shape object, double t) {
 	
 		this->object = object;
 		this->t = t;
@@ -25,7 +25,7 @@ public:
 	double getT() {
 		return t;
 	}
-	Sphere getObject() {
+	Shape getObject() {
 		return object;
 	}
 
